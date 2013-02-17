@@ -1,0 +1,50 @@
+click 120
+base 12
+
+4  2
+pause 2
+0  2
+pause 6
+4  2
+pause 2
+0  2
+pause 6
+4  2
+pause 2
+7  2
+pause 2
+7  1
+pause 1
+4  1
+pause 1
+0  1
+pause 1
+4  1
+pause 1
+2  2
+pause 6
+
+5  2
+pause 2
+-1 2
+pause 6
+2  2
+pause 2
+-5 2
+pause 6
+2  2
+pause 2
+5  2
+pause 2
+5  1
+pause 1
+2  1
+pause 1
+-1 1
+pause 1
+2  1
+pause 1
+0  2
+pause 6
+
+
