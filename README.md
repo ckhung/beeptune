@@ -13,6 +13,10 @@ Plays tunes using beep.
 
 I am still struggling with how to sync master and gh-pages of github...
 
+## Project Homepage ##
+
+http://ckhung.github.com/beeptune/
+
 ## Author ##
 
 Chao-Kuei Hung
