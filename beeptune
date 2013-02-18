@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 # Author: Chao-Kuei Hung
 # License: GNU General Public License 3 or newer
-# http://people.ofset.org/~ckhung/
+# Homepage: http://ckhung.github.com/beeptune/
 
 use Getopt::Std;
 use strict;
@@ -9,7 +9,7 @@ use Time::HiRes qw(usleep);
 my (%opts, $level);
 my (
     $click,		# duration of a click, in milliseconds
-    $base,		# each note is ofsetted by this number.
+    $base,		# each pitch is ofsetted by this number.
 			# $base=-12 makes the tune play at 1 octave lower
 ) = (
     100,
@@ -27,26 +27,26 @@ getopts('b:s:', \%opts);
 while (<>) {
     s/#.*//;
     next if /^\s*$/;
-    my ($note, $arg) = split " ";
-    if ($note eq 'base') {
+    my ($pitch, $arg) = split " ";
+    if ($pitch eq 'base') {
 	$base = $arg;
-    } elsif ($note eq 'click') {
+    } elsif ($pitch eq 'click') {
 	$click = $arg;
     } else {
 	if (not $arg =~ /^\d+(\.\d*)?$/) {
 	    printf STDERR "skipping unrecognized duration '$arg'\n";
 	    next;
 	}
-	if ($note eq 'pause') {
+	if ($pitch eq 'pause') {
 	    $arg *= $click / $opts{s};
 	    usleep($arg*1000);
-	} elsif ($note =~ /^-?\d+$/) {
-	    $note = freq($note + $base + $opts{b});
+	} elsif ($pitch =~ /^-?\d+$/) {
+	    $pitch = freq($pitch + $base + $opts{b});
 	    $arg *= $click / $opts{s};
-	    die if system("beep -f $note -l $arg");
+	    die if system("beep -f $pitch -l $arg");
 	    # to honor ctrl-c -- see http://www.perlmonks.org/?node_id=722571
 	} else {
-	    printf STDERR "skipping unrecognized note '$note'\n";
+	    printf STDERR "skipping unrecognized pitch or command '$pitch'\n";
 	    next;
 	}
     }

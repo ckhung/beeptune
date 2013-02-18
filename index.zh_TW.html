@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Beeptune by ckhung</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="js/jq/jquery.js" type="text/javascript"></script>
+    <script src="js/jq/fancyzoom/shadow.js" type="text/javascript"></script>
+    <script src="js/jq/fancyzoom/ifixpng.js" type="text/javascript"></script>
+    <script src="js/jq/fancyzoom/fancyzoom.js" type="text/javascript"></script>
+    <script src="js/core.js" type="text/javascript"></script>
+    <script src="js/scale.fix.js" type="text/javascript"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Beeptune</h1>
+        <p class="header">用 beep 播樂曲</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/ckhung/beeptune/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/ckhung/beeptune/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/ckhung/beeptune">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">作者: <a class="header name"
+	href="https://github.com/ckhung">資訊人權貴</a></p>
+
+      </header>
+      <section>
+        <h1>Beeptune</h1>
+
+<p>Beeptune 讓你用系統的陽春喇叭播放簡單的樂曲, 像是小星星之類的。
+你可以用純文字編輯器建立一個簡單的 .tune 格式檔,
+內含一對對的音符及其長度, 然後就可以用 beeptune
+播出呆呆的單聲道嗶聲音樂。
+Beeptune 不能播放合音/和絃。
+
+<h3>Beeptune 適用於哪些場合?</h3>
+
+<p>Beeptune 是一支極輕量的 perl 程式, 在終端機上就可以執行。
+有時候使用者可能無法 (或不想) 從螢幕讀取資訊,
+這時可以考慮用 beeptune 來傳遞很多 bits 的訊息。
+諸如盲人版的 linux、 除錯各種伺服器及開機 scripts、
+或是窮人版的 「筆電電池用盡警告器」 之類的場合,
+beeptune 都可能派得上用場。
+
+<p>不管有沒有用, 總之好玩嘛。 也許拿它來幫 <a href=
+"http://lifehacker.com/373571/watch-star-wars-in-text-via-telnet">
+ASCII 版的星際大戰電影</a> 配樂會很搭 :-)
+
+<h3>使用前的準備</h3>
+
+<p><img src="images/alsamix-beep.png"
+alt="使用 alsamixer 把 Beep 頻道打開"
+width="200" align="right" />
+使用 beeptune 之前, 請先確認:
+<ol>
+<li>已安裝 debian 或 rpm 的 <code>beep</code> 套件。
+<li>下 <code>alsamixer</code> 指令, 並且用方向鍵
+arrow keys to <a href=
+"https://wiki.archlinux.org/index.php/Beep">
+移到 "Beep" 頻道, 把音量調大</a>。
+請按幾次 "m" 鍵, 確認 
+<strong>make sure that the label below the beep
+"Beep" 頻道下方應該要顯示 "OO" 才對, 而不是 "MM"</strong>。
+最後按 escape 鍵離開 alsamixer。
+</ol>
+
+<h3>使用 Beeptune</h3>
+
+<p>Beeptune 指令可接受任意個參數, 每個參數都是一個 .tune 檔的檔名;
+它會逐一播放每個檔案。 如果命令列上沒有參數, 它就把
+standard input 當做 .tune 檔來讀。
+子目錄 <code>examples/</code> 底下有一些 .tune 檔的範例。
+比方說, <code>./beeptune examples/little-star.tune</code>
+這個指令會用系統嗶聲播放 「小星星」。
+
+<p>播放速度可以用 <code>-s</code> 選項來調控。
+比方說, <code>./beeptune -s 5 examples/cuckoo-waltz.tune</code>
+這個指令會用 5 倍快的速度播放 「杜鵑圓舞曲」;
+而 <code>./beeptune -s 0.5 examples/cuckoo-waltz.tune</code>
+則會用一半的速度播放 (跟 「沒有選項的情況」 比起來, 要花兩倍的時間播放)。
+
+<p>整首歌的音調可以用 <code>-b</code> 選項調升或調降。
+比方說, 這樣播放: <code>./beeptune -b 7 examples/beautiful-dreamer.tune</code>
+會提高七個半音播放 「美麗的夢仙」, 也就是把 C 調移高成 G 調; 而這樣播放:
+<code>./beeptune -b -12 examples/beautiful-dreamer.tune</code>
+則會降低八度 (12 個半音) 播放。
+
+<h3>撰寫 .tune 檔</h3>
+
+<p>A tune file is a simple text file.
+Most lines contain two numbers.
+
+<p>一個 .tune 檔其實只是一個簡單的文字檔,
+裡面絕大多數的列都只含兩個數字。
+第一個數字是一個整數 (可以是負整數), 代表這個音的音階 --
+0 代表 <a href="https://zh.wikipedia.org/wiki/C_%28%E9%9F%B3%E5%90%8D%29">
+中央 C (C4, 261.6 Hz)</a>、 12 代表 C5 (比中央 C 高八度的那個音)、
+-7 代表 F3 (174.6 Hz)、 ...。
+第二個數字是一個正實數, 代表這個音的長度。
+音長的單位是 "click"; 預設一個 click 的長度是 100 毫秒 (0.1 秒)。
+所以如果某一列的內容是 <code>3 5.7</code>,
+就代表 「播放 D# (311.1 Hz) 0.57 秒鐘」。
+
+<p>以 "pause" 開頭的列表示休止符。 比方說, 如果某一列的內容是
+<code>pause 4.2</code>, 那就表示這裡要休息 4.2 個 clicks
+(以預設的情況來說, 就是休息 0.42 秒)。
+
+<p>這個 click 單位的長短, 其實是可以改變的。
+比方說, 如果遇到這樣一列: <code>click 150</code>,
+那就表示從現在開始, 每個 click 的長度改為 150 毫秒 (0.15 秒)。
+
+<p>你也可以在 .tune 檔當中改變基調。
+比方說, 如果遇到這樣一列: <code>base 7</code>,
+那就表示從現在開始, 每個音都向上調高七個半音。
+
+<p>空白列會被忽略。 每一列上, 從 # 號開始到一列的結尾都被當做是註解。
+
+<h3>接下來呢?</h3>
+
+<p>我曾試過用 <code>at</code> 指令, 在好幾個終端機上同時分別啟動
+beeptune, 不過很遺憾地是這並沒有辦法產生和絃。
+想來是因為整個系統裡的所有程序都共用同一個 「嗶聲喇叭」。
+任何一個程序一搶到控制權, 前一個程序所播放的音就立刻被停掉了。
+
+<p>如果可以寫一個轉換程式, 從 MusicXML 檔或 midi 檔裡面拉出單一弦律
+(請用正確的音樂術語糾正我) 把它變成一個 .tune 檔,
+那就很好玩了。 這樣的話, 網路上這麼多的免費 MusicXML/midi
+檔都可以拿來用 beeptune 播放。
+
+<p>不知道撰寫 arduino 版的 beeptune 要花多少工夫?
+有了它之後, 就可以組很便宜的 「嗶聲合唱團」 了 :-)
+
+      </section>
+      <footer>
+	<p><small><a href="index.html">English</a></small></p>
+
+	<p><small>Hosted on <a href="https://pages.github.com">GitHub
+Pages</a> using the Dinky theme</small></p>
+      <footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
