@@ -8,6 +8,10 @@ Plays tunes using beep.
 
 (debian or rpm package) **beep**
 
+## Project Homepage ##
+
+http://ckhung.github.com/beeptune/
+
 ## Author ##
 
 Chao-Kuei Hung
