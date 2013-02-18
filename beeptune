@@ -17,12 +17,12 @@ my (
 );
 
 %opts = (
-    c => 1.0,		# $click is multiplied by this number.
+    s => 1.0,		# speed factor. 2.0 means twice faster
 			# -c 3.0 makes the tune play 3 times slower
     b => 0,		# $base is ofsetted by this number.
 			# -b 24 makes the tune play at 2 octaves higher
 );
-getopts('b:c:', \%opts);
+getopts('b:s:', \%opts);
 
 while (<>) {
     s/#.*//;
@@ -38,11 +38,11 @@ while (<>) {
 	    next;
 	}
 	if ($note eq 'pause') {
-	    $arg *= $click * $opts{c};
+	    $arg *= $click / $opts{s};
 	    usleep($arg*1000);
 	} elsif ($note =~ /^-?\d+$/) {
 	    $note = freq($note + $base + $opts{b});
-	    $arg *= $click * $opts{c};
+	    $arg *= $click / $opts{s};
 	    die if system("beep -f $note -l $arg");
 	    # to honor ctrl-c -- see http://www.perlmonks.org/?node_id=722571
 	} else {

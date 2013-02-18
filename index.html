@@ -47,6 +47,11 @@ linux distributions for the blind, in debugging services
 and boot scripts, or as a poor man's alarm for notebook
 battery low power.
 
+<p>And finally, it's just fun. Theoretically, it could be
+used to create a perfect soundtrack for the <a href=
+"http://lifehacker.com/373571/watch-star-wars-in-text-via-telnet">
+ASCII art version of Star Wars</a> :-)
+
 <h3>Requirements</h3>
 
 <p>You need to do the following before you can use beeptune.
@@ -57,6 +62,29 @@ battery low power.
 turn on the volume of "beep"</a>. <em>Make sure that
 the label below the channel is "00" instead of "MM" .</em>
 </ol>
+
+<h3>Running Beeptune</h3>
+
+<p>The beeptune command accepts 0 or more "tune" files as
+command line arguments. It plays each file in order.
+If there is no command line argument, it reads from
+the standard input as if it were a tune file.
+You can find sample tune files in the <code>examples/</code>
+directory. For example,
+<code>./beeptune examples/little-star.tune</code>
+plays "little star" using the system beep.
+
+<p>The playing speed can be changed with the <code>-s</code> option.
+For example, <code>./beeptune -s 5 examples/cuckoo-waltz.tune</code>
+plays "the cuckoo waltz" five times faster, while
+<code>./beeptune -s 0.5 examples/cuckoo-waltz.tune</code>
+plays it at half the speed.
+
+<p>The tune can be played at a higher or lower tone.
+For example, <code>./beeptune -b 7 examples/beautiful-dreamer.tune</code>
+plays "beautiful dreamer" at 7 semitones higher, while
+<code>./beeptune -b -12 examples/beautiful-dreamer.tune</code>
+plays it at an octave (12 semitones) lower.
 
       </section>
       <footer>
